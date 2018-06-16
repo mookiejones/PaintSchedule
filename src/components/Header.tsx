@@ -1,9 +1,17 @@
-﻿import React from 'react'; 
-import { Navbar, Nav, NavItem } from "react-bootstrap";
-import { links } from './nav';
+﻿import * as React from 'react';
+import { Component } from 'react';
+import { Nav, Navbar, NavItem } from "react-bootstrap";
+
  
 
-export class Header extends React.Component 
+interface IProps {
+
+}
+
+interface IState {
+
+}
+export class Header extends Component<IProps,IState> 
 {
 
   static get Links(){
@@ -29,7 +37,7 @@ export class Header extends React.Component
                 </Navbar.Header>
                 <Nav>
                 {
-                    links.map(item=><NavItem key={item.title} href={item.link}>{item.title}</NavItem>)
+                    Header.Links.map(item=><NavItem key={item.title} href={item.link}>{item.title}</NavItem>)
                 }
              </Nav>
              </Navbar>

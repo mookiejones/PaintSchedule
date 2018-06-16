@@ -1,12 +1,15 @@
-﻿import React from 'react';
-import { BrowserRouter,Route,Switch } from 'react-router-dom';
+﻿import { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { DriverPerformance } from './DriverPerformance';
+import { ExcelImport } from './ExcelImport';
+import { PaintApp } from './PaintApp';
+import { PaintLine } from './PaintLine';
 import { PaintScheduleEditor } from './PaintScheduleEditor/PaintScheduleEditor';
 import { StyleCodeEditor } from './StyleCodeEditor/StyleCodeEditor';
-import { ExcelImport } from './ExcelImport';
-import { PaintLine } from './PaintLine';
-import { PaintApp } from './PaintApp';
-import { DriverPerformance } from './DriverPerformance';
-export class Main extends React.Component {
+
+interface IProps{}
+interface IState{}
+export class Main extends Component<IProps,IState> {
 
 render(){
     return (
@@ -25,61 +28,6 @@ render(){
    
 )}
 }
-
-/*
-import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Router = require('react-router').Router
-var IndexRoute = require('react-router').IndexRoute
-var Route = require('react-router').Route
-var hashHistory = require('react-router').hashHistory
-
-var createReactClass = require('create-react-class');    //required before react version 16 or convert code over into es2015 classes.
-
-var MainView = require('./components/main-view.jsx');
-var PaintSchedule = require('./components/paint-schedule/paint-schedule.jsx');
-//var PaintScheduleEditor = require('./components/paint-schedule-editor/paint-schedule-editor.jsx');
-var StyleCodeEditor = require('./components/style-code-editor/style-code-editor.jsx');
-var ProgramColorsEditor = require('./components/program-colors-editor/program-colors-editor.jsx'); 
-var PaintApp = require('./components/paint-load-app/paint-app.jsx');
-var DriverPerformance = require('./components/driver-performance/driver-performance.jsx');
-var mountNode = document.getElementById('container');
-
-export default class App extends React.Component {
-    getInitialState() {
-
-    var env = 'production';
-    if(window.location.href.includes('localhost')){
-      env = 'development'
-    }
-
-    return { env: env }
-  }
-  render(){
-    return(
-        <Router history={hashHistory}  >
-        <Route path="/" component={MainView}>
-                <IndexRoute env={this.state.env} component={PaintApp} />           
-                <Route env={this.state.env} path="../Home/Schedule"  />
-          <Route env={this.state.env} path='/style-codes' component={StyleCodeEditor}/>
-          <Route env={this.state.env} path='/program-colors' component={ProgramColorsEditor} />
-          <Route env={this.state.env} path='/excel-import' component={ExcelImport} />
-          <Route env={this.state.env} path='/paint-line' component={PaintLine} />
-          <Route env={this.state.env} path='/paint-app' component={PaintApp} />
-          <Route env={this.state.env} path='/driver-performance' component={DriverPerformance} />
-        </Route>
-      </Router>
-    );
-  }
-});
-
-
-// <IndexRoute env={this.state.env} component={PaintScheduleEditor} />
-// <Route env={this.state.env} path='/edit' component={PaintScheduleEditor} />
 
 
 String.prototype.formatUnicorn = String.prototype.formatUnicorn ||
@@ -111,6 +59,3 @@ String.prototype.hashCode = function(){
   }
   return hash;
 }
-
-ReactDOM.render(<App />, mountNode);
-*/
