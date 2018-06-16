@@ -1,13 +1,12 @@
 import * as $ from 'jquery';
-import React from 'react';
+import { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import update from 'react-addons-update';
 import * as ReactDataGrid from 'react-data-grid';
-import {  } from 'react-data-grid-addons';
-import  ReactDataGridPlugins from 'react-data-grid-addons';
+import  * as ReactDataGridPlugins from 'react-data-grid-addons';
 import { RoundSummary } from './RoundSummary';
 import * as classnames from 'classnames';
-
+import {IReactiveBtnProps, IPaintScheduleEditorProps, INotesFormatterProps,IPaintScheduleEditorState} from '../../StateProps'
 var AutoCompleteEditor = ReactDataGridPlugins.Editors.AutoComplete;
 var ContextMenu = ReactDataGridPlugins.Menu.ContextMenu;
 var MenuItem = ReactDataGridPlugins.Menu.MenuItem;
@@ -16,8 +15,7 @@ var SubMenu = ReactDataGridPlugins.Menu.SubMenu;
 const heightOffset = 250;
 
 
-
-export class NotesFormatter extends React.Component {
+export class NotesFormatter extends Component<INotesFormatterProps> {
   render(){
     var labelClass = classnames({
       'redhot': this.props.value.toLowerCase().includes("red hot"),
@@ -27,7 +25,7 @@ export class NotesFormatter extends React.Component {
 }
 //Columns definition
 
-export class ReactiveBtn extends React.Component{
+export class ReactiveBtn extends Component<IReactiveBtnProps,{}>{
  
   render(){
     return(
@@ -38,8 +36,19 @@ export class ReactiveBtn extends React.Component{
   );
   }
 }
+interface IPaintScheduleEditorContextMenuProps{
+  onRowDelete(e:any,data:any):void;
+  onDeleteSelectedRows(e:any,data:any):void;
+  onRowInsertAbove(e:any,data:any):void;
+  onRowInsertBelow(e:any,data:any):void;
+  onCopyToNewRound(e:any,data:any):void;
+  onPersistNewRow(e:any,data:any):void;
+  onCopySelectedBelow(e:any,data:any):void;
+  onCopySelectedAbove(e:any,data:any):void;
+  onCopyToEndOfRound(e:any,data:any):void;
 
-class PaintScheduleEditorContextMenu extends React.Component {
+}
+class PaintScheduleEditorContextMenu extends Component<IPaintScheduleEditorContextMenuProps,{}> {
   constructor(props,context){
     super(props,context);
   }
@@ -104,8 +113,14 @@ class PaintScheduleEditorContextMenu extends React.Component {
   }
 }
  
-export class RowRenderer extends  React.Component {
-  setScrollLeft(scrollBy) {
+interface IRowRenderer{
+  setScrollLeft(scrollBy:any):void;
+  row:any;
+  getProgramColors(style_code:any):void;
+  columns:any;
+}
+export class RowRenderer extends  Component<IRowRenderer,{}> {
+  setScrollLeft(scrollBy:any) {
     this.refs.row.setScrollLeft(scrollBy);
   }
   render() {
@@ -126,7 +141,8 @@ export class RowRenderer extends  React.Component {
       'build': notes.includes("build")
     });
 
-    if(pgc == undefined) pgc = [{color_desc:"999"}];
+    if(pgc == undefined) 
+      pgc = [{color_desc:"999"}];
 
     if(columns[colorColIdx].key != "color"){
       for(var i = 0; i < columns.length; i++){
@@ -139,7 +155,8 @@ export class RowRenderer extends  React.Component {
   }
 }
 
-export class PaintScheduleEditor extends React.Component{
+
+export class PaintScheduleEditor extends Component<IPaintScheduleEditorProps,IPaintScheduleEditorState>{
 
   constructor(props,context){
     super(props,context);
@@ -185,7 +202,7 @@ export class PaintScheduleEditor extends React.Component{
   handleResize(e) {
     this.setState({height: window.innerHeight-heightOffset});
   }
-  getPaintSchedule(dateStr){
+  getPaintSchedule(dateStr?:any){
     var url;
 
     if(this.props.environment == 'production'){
@@ -298,7 +315,7 @@ export class PaintScheduleEditor extends React.Component{
 
     return programColors;
   }
-  rowGetter(rowIdx){
+  rowGetter(rowIdx:any){
     return this.state.rows[rowIdx]
   }
   deleteRow(e, data) {
@@ -578,7 +595,7 @@ if(true){//}    if(confirm(string)){
   }
   render(){
 
-    var changes = this.state.changedRows < 1;
+    var changes = this.state.changedRows.length < 1;
     var numSelected = this.state.numSelected
     var newrows = this.state.newRows;
 

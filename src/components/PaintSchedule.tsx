@@ -1,6 +1,6 @@
+import * as $ from 'jquery';
 import { Component } from 'react';
-import * as $ from 'jquery'; 
-
+import { Table } from 'react-bootstrap';
 
 interface IColumnItem {
   key:string;
@@ -143,8 +143,8 @@ export class PaintSchedule extends Component<{},IPaintScheduleState>{
   }
   render(){
     return(
-      <table className="table table-striped table-bordered">
-        <thead>
+      <Table striped bordered hover>
+       <thead>
           <tr>
             {columns.map(function(column_metadata, colIdx){
               return(<th>{column_metadata.name}</th>)
@@ -168,7 +168,7 @@ export class PaintSchedule extends Component<{},IPaintScheduleState>{
             })
           }
         </tbody>
-      </table>
-    );
+      </Table>
+       );
   }
 }

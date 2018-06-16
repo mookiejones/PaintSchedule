@@ -1,12 +1,11 @@
-import React  from 'react';
-import * as classnames from 'classnames';
+import { Component } from 'react';
 
 
 interface IRoundSummaryProps{
   round:any;
   roundSummary:Array<any>;
 }
-export class RoundSummary extends React.Component<IRoundSummaryProps,{}> {
+export class RoundSummary extends Component<IRoundSummaryProps,{}> {
   constructor(props,context){
     super(props,context);
     this.state={
