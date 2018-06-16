@@ -32,7 +32,7 @@ render(){
 
 
 String.prototype.formatUnicorn = String.prototype.formatUnicorn ||
-function () {
+function ():string {
     "use strict";
     var str = toString();
     if (arguments.length) {

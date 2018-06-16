@@ -1,46 +1,49 @@
-import React from 'react';
+import * as React from 'react'; 
+import { Component } from 'react';
 import moment from 'moment';
 import * as Highcharts from 'highcharts';
-import   *  as ReactDatePicker from 'react-date-picker';
-import * as update from 'react-addons-update';
- let DateField=ReactDatePicker.DateField;
- let Calendar=ReactDatePicker.Calendar;
 
-interface INameInterface {
-  name:string;
-  data:any
+import  update from 'react-addons-update';
+
+import DatePicker from 'react-date-picker';
+import Calendar from 'react-calendar';
+let DateField = DatePicker;
+interface NameInterface {
+  name: string;
+  data: any;
 }
 
-function breakIntoSeries(arr, format){
-    let series = [];
-    let s:INameInterface;
-    arr.map(function(el, idx){
-      if(!s.name){
+function breakIntoSeries(arr: any, format: any){
+    let series: any = [];
+    let s: NameInterface;
+    arr.map(function(el: any, idx: any){
+      if (!s.name){
         s.name = el.full_name;
         s.data = [];
-      }else{
-        if(s.name == el.full_name){
-          s.data.push([moment.utc(el.date_handled, format).valueOf(), Math.round((parseInt(el.seconds)/60)*100)/100]);
+      }else {
+        if (s.name === el.full_name){
+          s.data.push([moment.utc(el.date_handled, format).valueOf(), Math.round((parseInt(el.seconds) / 60) * 100) / 100]);
         }else{
-          series.push(update(s, {$merge:{}}));
+          series.push(update(s, {$merge: {}}));
           s.name = el.full_name;
           s.data = [];
-          s.data.push([moment.utc(el.date_handled, format).valueOf(), Math.round((parseInt(el.seconds)/60)*100)/100]);
+          s.data.push([moment.utc(el.date_handled, format).valueOf(), Math.round((parseInt(el.seconds) / 60) * 100) / 100]);
         }
       }
     });
     return series;
 }
 interface HCProps{
-  modules?:Array<any>;
-  container:any;
-  options:any;
-  type:any;
+  modules?: Array<any>;
+  container: any;
+  options: any;
+  type: string;
 
 }
-  
-class HC extends React.Component<HCProps,{}>{
-  chart:any;
+interface DriverProp{}
+interface HCState{}
+class HC extends Component<HCProps, HCState>{
+  chart: any;
     /**
      * When the DOM is ready, create the chart
      */
@@ -48,12 +51,12 @@ class HC extends React.Component<HCProps,{}>{
         // Extend Highcharts with modules
 
         if (this.props.modules) {
-            this.props.modules.forEach(function (module) {
+            this.props.modules.forEach(function (module: any) {
                 module(Highcharts);
             });
         }
         // Set container which the chart should render to.
-        this.chart = new Highcharts[this.props.type || "Chart"](
+        this.chart = new Highcharts[this.props.type || 'Chart'](
             this.props.container,
             this.props.options
         );
@@ -72,7 +75,6 @@ class HC extends React.Component<HCProps,{}>{
     componentWillUnmount() {
         this.chart.destroy();
     }
-
     
     /**
      * Create the div which the chart will be rendered to.
@@ -82,17 +84,17 @@ class HC extends React.Component<HCProps,{}>{
     }
 }
 
-interface IDriverState {
-  startTime:any;
-  endTime:any;
-  defaultOptions:any;
-  options:any;
-  env:string;
-  worsePerformers:any;
-  underTen:any;
+interface DriverState {
+  startTime: any;
+  endTime: any;
+  defaultOptions: any;
+  options: any;
+  env: string;
+  worsePerformers: any;
+  underTen: any;
 }
 
-export class DriverPerformance extends React.Component<{},IDriverState> {
+export class DriverPerformance extends React.Component<DriverProp, DriverState> {
   getInitialState(){
     let now = moment();
     let then = moment().subtract(2, 'hours');
@@ -113,8 +115,8 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
            title: {
              scalable: false
            },
-           type: 'datetime'//,
-           //labels: {
+           type: 'datetime'// ,
+           // labels: {
           //   formatter() {
           //     return Highcharts.dateFormat('%d-%b', (this.value));
           //   }
@@ -156,7 +158,7 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
         },
         series: []
       },
-      options: {generated: new moment().format("MM/DD/YYYY hh:mm:ss")},
+      options: {generated: moment().format('MM/DD/YYYY hh:mm:ss')},
       worsePerformers: [],
       underTen: []
     }
@@ -164,8 +166,8 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
   componentWillMount(){
     this.getDriverAverages();
   }
-  componentDidUpdate(prevProps, prevState){
-    if(prevState.startTime != this.state.startTime || prevState.endTime != this.state.endTime){
+  componentDidUpdate(prevProps: any, prevState: any){
+    if (prevState.startTime !== this.state.startTime || prevState.endTime !== this.state.endTime){
       this.getDriverAverages();
     }
   }
@@ -173,17 +175,18 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
     let request = new XMLHttpRequest();
     let url;
 
-      let params = {
-          startdate: this.state.startTime.format("YYYY-MM-DD HH:mm:ss"),
-          enddate: this.state.endTime.format("YYYY-MM-DD HH:mm:ss")
+
+    let params: any = {
+          startdate: this.state.startTime.format('YYYY-MM-DD HH:mm:ss'),
+          enddate: this.state.endTime.format('YYYY-MM-DD HH:mm:ss')
       };
         
-    if(this.state.env == "development"){
-      //url = "api/paint/getDriverAverages";
-        url = "api/paint/getDriverAverages?startDate" + params[0] + "&enddate=" + params[1];
+    if (this.state.env == 'development'){
+      // url = "api/paint/getDriverAverages";
+        url = 'api/paint/getDriverAverages?startDate' + params[0] + '&enddate=' + params[1];
     }else{
-      //url = "api/paint/getDriverAverages";
-        url = "api/paint/getDriverAverages?startDate" + params[0] + "&enddate=" + params[1];
+      // url = "api/paint/getDriverAverages";
+        url = `api/paint/getDriverAverages?startDate=${params[0]}&enddate=params[1]`;
     }
 
     request.open('GET', url, true);
@@ -191,24 +194,24 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
     request.onload = () => {
       if (request.status >= 200 && request.status < 400) {
         let data = JSON.parse(request.response);
-        //let arr = JSON.parse(data.d);
-          let arr = data;
-        let format = "MM/DD/YYYY hh:mm:ss A";
+        let arr = JSON.parse(data.d);
+          // let arr = data;
+        let format = 'MM/DD/YYYY hh:mm:ss A';
 
         let average = {
-          name: "average",
-          type: "spline",
+          name: 'average',
+          type: 'spline',
           data: []
         }
 
-        let options = update(this.state.defaultOptions, {$merge: {}});
+        let options: any = update(this.state.defaultOptions, {$merge: {}});
         options.series = breakIntoSeries(arr[0], format);
 
-        for(let i = 0; i < arr[2].length; i++){
+        for (let i = 0; i < arr[2].length; i++){
             average.data.push([moment(arr[2][i].date_handled, format).valueOf(), parseInt(arr[2][i].avg_seconds)])
         }
         //options.series.push(average);
-        options.generated = moment().format("MM/DD/YYYY hh:mm:ss")
+        options.generated = moment().format('MM/DD/YYYY hh:mm:ss')
         this.setState({
           options: options,
           worsePerformers: arr[1],
@@ -256,7 +259,7 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
                       <DateField style={{marginLeft: '25px'}}
                         dateFormat="MM/DD/YYYY HH:mm:ss"
                         onChange={(dateString, { dateMoment, timestamp}) => {
-                          //document.activeElement.blur()
+                          // document.activeElement.blur()
                           this.setState({endTime: dateMoment});
                         }}
                         forceValidDate={true}
@@ -278,27 +281,27 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
                   </div>);
     let Chart = (<div>
                   <div>
-                    <HC container='chart' key={this.state.options.generated} options={this.state.options} />
+                    <HC container="chart" key={this.state.options.generated} options={this.state.options} />
                   </div>
-                  <div style={{display:'flex'}}>
+                  <div style={{display: 'flex'}}>
                     <div>
                       <h2>Slowest Picks</h2>
-                      <table className='table table-bordered table-hover' style={{width: 'auto', margin: '10px'}}>
+                      <table className="table table-bordered table-hover" style={{width: 'auto', margin: '10px'}}>
                         <thead><tr><th>Driver</th><th>Length (seconds)</th></tr></thead>
-                        <tbody>{this.state.worsePerformers.map((row, idx) => {return(<tr key={row.name + "-" + idx}><td style={{width: "250px"}}>{row.full_name}</td><td style={{width: "350px"}}>{row.seconds} (~{Math.round(row.seconds/60*100)/100} minutes)</td></tr>)})}</tbody>
+                        <tbody>{this.state.worsePerformers.map((row, idx) => {return(<tr key={row.name + '-' + idx}><td style={{width: '250px'}}>{row.full_name}</td><td style={{width: '350px'}}>{row.seconds} (~{Math.round(row.seconds / 60 * 100) / 100} minutes)</td></tr>)})}</tbody>
                       </table>
                     </div>
                     <div>
                       <h2>Picks under 10 Seconds</h2>
-                      <table className='table table-bordered table-hover' style={{width: 'auto'}}>
+                      <table className="table table-bordered table-hover" style={{width: 'auto'}}>
                         <thead><tr><th>Driver</th><th>Number of Picks</th></tr></thead>
-                        <tbody>{this.state.underTen.map((row, idx) => {return(<tr key={row.full_name + "-" + idx + "-underTen"}><td style={{width: "250px"}}>{row.full_name}</td><td style={{width: "350px"}}>{row.c}</td></tr>)})}</tbody>
+                        <tbody>{this.state.underTen.map((row, idx) => {return(<tr key={row.full_name + '-' + idx + '-underTen'}><td style={{width: '250px'}}>{row.full_name}</td><td style={{width: '350px'}}>{row.c}</td></tr>)})}</tbody>
                       </table>
                     </div>
                   </div>
                 </div>)
 
-    if(!this.state.options.series){
+    if (!this.state.options.series){
       return(Options);
     }else{
       return(
@@ -311,4 +314,3 @@ export class DriverPerformance extends React.Component<{},IDriverState> {
 
   }
 }
-

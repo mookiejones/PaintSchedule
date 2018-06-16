@@ -1,38 +1,34 @@
-import  { Component } from 'react';
-import { Menu }   from 'react-data-grid-addons';
-
+import * as React from 'react';
+import { Component } from 'react';
+import { Menu } from 'react-data-grid-addons';
 
 var ContextMenu = Menu.ContextMenu;
 var MenuItem = Menu.MenuItem;
 
-
-interface IContextProps {
-  onRowDelete:(e:any,data:any)=>void;
-  onRowInsertBelow:(e:any,data:any)=>void;
-  onPersistNewRow:(e:any,data:any)=>void;
-  multipleSelected:any;
-  newRows:any;
-  rowIdx:Number;
-  idx:Number;
+interface ContextProps {
+  onRowDelete: (e: any, data: any) => void;
+  onRowInsertBelow: (e: any, data: any) => void;
+  onPersistNewRow: (e: any, data: any) => void;
+  multipleSelected: any;
+  newRows: any;
+  rowIdx: Number;
+  idx: Number;
 }
 
-interface IContextState{
+interface ContextState{}
+export class StyleCodeEditorContextMenu extends Component<ContextProps, ContextState> {
 
-}
-export class StyleCodeEditorContextMenu extends Component<IContextProps,IContextState>{
-
-
-  onRowDelete(e:any, data:any) {
+  onRowDelete(e: any, data: any) {
     if (typeof(this.props.onRowDelete) === 'function') {
       this.props.onRowDelete(e, data);
     }
   }
-  onRowInsertBelow(e:any, data:any) {
+  onRowInsertBelow(e: any, data: any) {
     if (typeof(this.props.onRowInsertBelow) === 'function') {
       this.props.onRowInsertBelow(e, data);
     }
   }
-  onPersistNewRow(e:any, data:any) {
+  onPersistNewRow(e: any, data: any) {
     if (typeof(this.props.onPersistNewRow) === 'function') {
       this.props.onPersistNewRow(e, data);
     }
@@ -49,30 +45,26 @@ export class StyleCodeEditorContextMenu extends Component<IContextProps,IContext
     );
   }
 }
-
-
-interface IProgramColorsContextMenuProps {
-  shizz:(e:any, data:any)=>void;
-  parentKey:any;
- onRowAdd:(e:any, data:any)=>void; 
- rowIdx:Number;
- idx:Number;
+interface ProgramColorsContextMenuProps {
+  shizz: (e: any, data: any) => void;
+  parentKey: any;
+ onRowAdd: (e: any, data: any) => void; 
+ rowIdx: Number;
+ idx: Number;
 }
-export class ProgramColorsContextMenu extends Component<IProgramColorsContextMenuProps>{
-  onRowDelete(e:any, data:any) {
+export class ProgramColorsContextMenu extends Component<ProgramColorsContextMenuProps>{
+  onRowDelete(e: any, data: any) {
     if (typeof(this.props.shizz) === 'function') {
       console.log(this.props.parentKey);
       this.props.shizz(e, data);
     }
   }
 
-
-  onRowAdd(e:any, data:any){
+  onRowAdd(e: any, data: any){
     if (typeof(this.props.onRowAdd) === 'function') {
       this.props.onRowAdd(e, data);
     }
   }
-
 
   render() {
     return (

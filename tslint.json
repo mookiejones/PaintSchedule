@@ -22,14 +22,13 @@
         "jsx-no-lambda": false,
         "jsx-no-multiline-js": false,
         "label-position": true,
-        "max-line-length": [ true, 120 ],
        
-        "no-any": true,
+        "no-any": false,
         "no-arg": true,
         "no-bitwise": true,
         "no-console": [
             true,
-            "log",
+            
             "error",
             "debug",
             "info",
@@ -57,13 +56,14 @@
             "check-whitespace"
         ],
         "quotemark": [true, "single", "jsx-double"],
-        "radix": true,
+        "radix": false,
+        "jsx-self-close":false,
         "semicolon": [true, "always"],
         "switch-default": true,
 
         "trailing-comma": false,
 
-        "triple-equals": [ true, "allow-null-check" ],
+        "triple-equals":false,
         "typedef": [
             true,
             "parameter",

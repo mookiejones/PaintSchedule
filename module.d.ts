@@ -1,6 +1,6 @@
-declare global {
+declare module 'global' {
     interface String {
-        hashCode() : Number;
-        formatUnicorn():any;
+        hashCode:() => Number;
+        formatUnicorn:()=>any;
     }
 }
