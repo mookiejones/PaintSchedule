@@ -1,4 +1,5 @@
-﻿import { Component } from 'react';
+﻿import * as React from 'react';
+import { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { DriverPerformance } from './DriverPerformance';
 import { ExcelImport } from './ExcelImport';
@@ -33,7 +34,7 @@ render(){
 String.prototype.formatUnicorn = String.prototype.formatUnicorn ||
 function () {
     "use strict";
-    var str = this.toString();
+    var str = toString();
     if (arguments.length) {
         var t = typeof arguments[0];
         var key;
@@ -48,6 +49,9 @@ function () {
 
     return str;
 };
+declare interface String{
+    hashCode():Number;
+}
 
 String.prototype.hashCode = function(){
   let hash = 0;

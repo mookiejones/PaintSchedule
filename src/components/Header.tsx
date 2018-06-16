@@ -1,28 +1,26 @@
 ﻿import * as React from 'react';
 import { Component } from 'react';
-import { Nav, Navbar, NavItem } from "react-bootstrap";
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
- 
-
-interface IProps {
+interface Props {
 
 }
 
-interface IState {
+interface State {
 
 }
-export class Header extends Component<IProps,IState> 
+export class Header extends Component<Props, State> 
 {
 
   static get Links(){
      return [
-         {title:"Schedule Editor",link:'edit'},
-         {title:"Style Codes",link:'style-codes'},
-         {title:"Line View", link:'paint-line'},
-         {title:'Paint App',link:'paint-app'},
-         {title:'Excel Import',link:'excel-import'},
-         {title:'Driver Performance',link:'driver-performance'}
-     ]
+         {title: 'Schedule Editor', link: 'edit'},
+         {title: 'Style Codes', link: 'style-codes'},
+         {title: 'Line View', link: 'paint-line'},
+         {title: 'Paint App', link: 'paint-app'},
+         {title: 'Excel Import', link: 'excel-import'},
+         {title: 'Driver Performance', link: 'driver-performance'}
+     ];
       
   }
  
@@ -37,8 +35,7 @@ export class Header extends Component<IProps,IState>
                 </Navbar.Header>
                 <Nav>
                 {
-                    Header.Links.map(item=><NavItem key={item.title} href={item.link}>{item.title}</NavItem>)
-                }
+                    Header.Links.map(item => <NavItem key={item.title} href={item.link}>{item.title}</NavItem>)}
              </Nav>
              </Navbar>
         );
